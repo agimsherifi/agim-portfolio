@@ -27,23 +27,20 @@ if ('serviceWorker' in navigator) {
     <meta name="author" content="Agim Sherifi">
     <meta name="theme-color" content="#0891b2">
     <meta name="robots" content="index, follow">
-    <meta name="google-site-verification" content="">
-    <meta property="og:locale" content="sq_AL">
-    <meta property="og:site_name" content="Agim Sherifi Portfolio">
     
-    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://agimsherifi.com/">
     <meta property="og:title" content="Agim Sherifi - Kodi dhe Vargu">
-    <meta property="og:description" content="Aty ku logjika e ftohtë e kodit takohet me ngrohtësinë e pafundme të vargut. Një portofol kinematik.">
-    <meta property="og:image" content="./images/galeri/portrait.jpg">
+    <meta property="og:description" content="Aty ku logjika e ftohtë e kodit takohet me ngrohtësinë e pafundme të vargut.">
+    <meta property="og:image" content="https://agimsherifi.com/images/galeri/portrait.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
 
-    <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://agimsherifi.com/">
     <meta property="twitter:title" content="Agim Sherifi - Cinematic Portfolio">
     <meta property="twitter:description" content="Aty ku logjika e ftohtë e kodit takohet me ngrohtësinë e pafundme të vargut.">
-    <meta property="twitter:image" content="./images/galeri/portrait.jpg">
+    <meta property="twitter:image" content="https://agimsherifi.com/images/galeri/portrait.jpg">
     
 <script src="https://unpkg.com/react-loadable@5.5.0/dist/react-loadable.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -637,17 +634,22 @@ if ('serviceWorker' in navigator) {
             );
         };
 
-        // --- Social Share Suite ---
+       // --- Social Share Suite (Clean URL Version) ---
         const SocialShareSuite = ({ item, type, darkMode }) => {
-    const [showSuite, setShowSuite] = useState(false);
+            const [showSuite, setShowSuite] = useState(false);
             
+            // Linku bazë pa #
+            const baseUrl = "https://agimsherifi.com"; 
+
             const platforms = [
                 {
                     name: 'Facebook',
                     icon: Icons.Facebook,
                     color: 'hover:bg-blue-500 hover:text-white',
                     action: () => {
-                        const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://agimsherifi.com${item.url || '/'}`)}&quote=${encodeURIComponent(`"${item.text || item.title}" - Agim Sherifi`)}`;
+                        const itemUrl = item.url || '/';
+                        const finalUrl = `${baseUrl}${itemUrl}`;
+                        const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(finalUrl)}`;
                         window.open(url, '_blank');
                     }
                 },
@@ -656,8 +658,10 @@ if ('serviceWorker' in navigator) {
                     icon: Icons.Twitter,
                     color: 'hover:bg-blue-400 hover:text-white',
                     action: () => {
+                        const itemUrl = item.url || '/';
+                        const finalUrl = `${baseUrl}${itemUrl}`;
                         const text = encodeURIComponent(`"${item.text || item.title}" - Agim Sherifi`);
-                        const url = `https://twitter.com/intent/tweet?text=${text}&url=${encodeURIComponent(`https://agimsherifi.com${item.url || '/'}`)}`;
+                        const url = `https://twitter.com/intent/tweet?text=${text}&url=${encodeURIComponent(finalUrl)}`;
                         window.open(url, '_blank');
                     }
                 },
@@ -666,16 +670,20 @@ if ('serviceWorker' in navigator) {
                     icon: Icons.Whatsapp,
                     color: 'hover:bg-green-500 hover:text-white',
                     action: () => {
-                        const text = encodeURIComponent(`"${item.text || item.title}" - Agim Sherifi\n\n${`https://agimsherifi.com${item.url || '/'}`}`);
+                        const itemUrl = item.url || '/';
+                        const finalUrl = `${baseUrl}${itemUrl}`;
+                        const text = encodeURIComponent(`"${item.text || item.title}" - Agim Sherifi\n\n${finalUrl}`);
                         window.open(`https://wa.me/?text=${text}`, '_blank');
                     }
                 },
                 {
                     name: 'LinkedIn',
-                    icon: (props) => <svg {...props} viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>,
+                    icon: (props) => <svg {...props} viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.063 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>,
                     color: 'hover:bg-blue-700 hover:text-white',
                     action: () => {
-                        const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://agimsherifi.com${item.url || '/'}`)}`;
+                        const itemUrl = item.url || '/';
+                        const finalUrl = `${baseUrl}${itemUrl}`;
+                        const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(finalUrl)}`;
                         window.open(url, '_blank');
                     }
                 },
@@ -684,55 +692,59 @@ if ('serviceWorker' in navigator) {
                     icon: (props) => <svg {...props} viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.895 2.739.099.119.112.224.083.345-.09.375-.293 1.199-.334 1.363-.053.218-.173.265-.4.159-1.492-.694-2.424-2.875-2.424-4.627 0-3.769 2.737-7.229 7.892-7.229 4.144 0 7.365 2.953 7.365 6.899 0 4.117-2.595 7.431-6.199 7.431-1.211 0-2.348-.63-2.738-1.373 0 0-.599 2.282-.744 2.84-.282 1.084-1.064 2.456-1.549 3.235C9.584 23.815 10.77 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"/></svg>,
                     color: 'hover:bg-red-600 hover:text-white',
                     action: () => {
-                        const url = `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(`https://agimsherifi.com${item.url || '/'}`)}&description=${encodeURIComponent(`"${item.text || item.title}" - Agim Sherifi`)}`;
+                        const itemUrl = item.url || '/';
+                        const finalUrl = `${baseUrl}${itemUrl}`;
+                        const url = `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(finalUrl)}&description=${encodeURIComponent(`"${item.text || item.title}" - Agim Sherifi`)}`;
                         window.open(url, '_blank');
                     }
                 }
             ];
             
             const copyToClipboard = () => {
-        navigator.clipboard.writeText(`https://agimsherifi.com${item.url || '/'}`);
-        alert('Linku u kopjua në clipboard!');
-    };
-    
-    return (
-        <div className="relative">
-            <button 
-                onClick={() => setShowSuite(!showSuite)}
-                className={`p-2 rounded-full ${darkMode ? 'bg-slate-800 text-slate-300 hover:bg-slate-700' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'} transition-colors`}
-                aria-label="Shpërndaj"
-            >
-                <Icons.Share className="w-4 h-4" />
-            </button>
+                const itemUrl = item.url || '/';
+                const finalUrl = `${baseUrl}${itemUrl}`;
+                navigator.clipboard.writeText(finalUrl);
+                alert('Linku u kopjua në clipboard!');
+            };
             
-            {showSuite && (
-                <div 
-                    className={`absolute ${type === 'quote' ? 'bottom-full left-full ml-12 -translate-y-12' : 'bottom-full left-0 mb-4'} p-3 rounded-lg shadow-xl z-[100] min-w-[200px] transform translate-x-[-4cm] rotate-0 ${darkMode ? 'bg-slate-800 border border-slate-700' : 'bg-white border border-slate-200'}`}
-                >
-                    <div className="grid grid-cols-3 gap-2 mb-3">
-                        {platforms.map(platform => (
-                            <button
-                                key={platform.name}
-                                onClick={platform.action}
-                                className={`p-2 rounded flex flex-col items-center justify-center transition-all ${platform.color} ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}
-                                title={`Shpërndaj në ${platform.name}`}
-                            >
-                                <platform.icon className="w-5 h-5 mb-1" />
-                                <span className="text-xs">{platform.name}</span>
-                            </button>
-                        ))}
-                    </div>
-                    <button
-                        onClick={copyToClipboard}
-                        className={`w-full py-2 rounded text-sm font-bold ${darkMode ? 'bg-slate-700 hover:bg-slate-600 text-slate-300' : 'bg-slate-100 hover:bg-slate-200 text-slate-600'}`}
+            return (
+                <div className="relative">
+                    <button 
+                        onClick={() => setShowSuite(!showSuite)}
+                        className={`p-2 rounded-full ${darkMode ? 'bg-slate-800 text-slate-300 hover:bg-slate-700' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'} transition-colors`}
+                        aria-label="Shpërndaj"
                     >
-                        Kopjo Linkun
+                        <Icons.Share className="w-4 h-4" />
                     </button>
+                    
+                    {showSuite && (
+                        <div 
+                            className={`absolute ${type === 'quote' ? 'bottom-full left-full ml-12 -translate-y-12' : 'bottom-full left-0 mb-4'} p-3 rounded-lg shadow-xl z-[100] min-w-[200px] transform translate-x-[-4cm] rotate-0 ${darkMode ? 'bg-slate-800 border border-slate-700' : 'bg-white border border-slate-200'}`}
+                        >
+                            <div className="grid grid-cols-3 gap-2 mb-3">
+                                {platforms.map(platform => (
+                                    <button
+                                        key={platform.name}
+                                        onClick={platform.action}
+                                        className={`p-2 rounded flex flex-col items-center justify-center transition-all ${platform.color} ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}
+                                        title={`Shpërndaj në ${platform.name}`}
+                                    >
+                                        <platform.icon className="w-5 h-5 mb-1" />
+                                        <span className="text-xs">{platform.name}</span>
+                                    </button>
+                                ))}
+                            </div>
+                            <button
+                                onClick={copyToClipboard}
+                                className={`w-full py-2 rounded text-sm font-bold ${darkMode ? 'bg-slate-700 hover:bg-slate-600 text-slate-300' : 'bg-slate-100 hover:bg-slate-200 text-slate-600'}`}
+                            >
+                                Kopjo Linkun
+                            </button>
+                        </div>
+                    )}
                 </div>
-            )}
-        </div>
-    );
-};
+            );
+        };
 
         const TRANSLATIONS = {
             sq: {
@@ -1023,53 +1035,37 @@ if ('serviceWorker' in navigator) {
             ]
         };
 
-        // --- SEO Manager Component ---
+        // --- SEO Manager (Clean URL Version) ---
         const SEOManager = ({ title, description, url, type }) => {
             useEffect(() => {
-                // Update document title
+                // 1. Përditëso Titullin
                 if (title) {
                     document.title = title + " | Agim Sherifi";
                 }
                 
-                // Update meta description
-                const metaDesc = document.querySelector('meta[name="description"]');
-                if (metaDesc && description) {
-                    metaDesc.setAttribute('content', description);
+                // 2. Përditëso URL-në në shiritin e adresës (PA hash #)
+                if (url) {
+                    if (url !== '/') {
+                        // Kjo ndryshon URL-në vizualisht pa bërë refresh
+                        // Shembull: bëhet agimsherifi.com/poezi/mergimi
+                        const currentPath = window.location.pathname;
+                        if (currentPath !== url) {
+                             // Përdorim replaceState që mos të mbushim historikun kot
+                             window.history.replaceState(null, null, url);
+                        }
+                    }
                 }
                 
-                // Update Open Graph tags
+                // 3. Përditëso Meta Tags për SEO
+                const metaDesc = document.querySelector('meta[name="description"]');
+                if (metaDesc && description) metaDesc.setAttribute('content', description);
+                
+                // Open Graph update
                 const ogTitle = document.querySelector('meta[property="og:title"]');
-                const ogDesc = document.querySelector('meta[property="og:description"]');
                 const ogUrl = document.querySelector('meta[property="og:url"]');
-                const ogType = document.querySelector('meta[property="og:type"]');
                 
                 if (ogTitle && title) ogTitle.setAttribute('content', title);
-                if (ogDesc && description) ogDesc.setAttribute('content', description);
                 if (ogUrl && url) ogUrl.setAttribute('content', `https://agimsherifi.com${url}`);
-                if (ogType && type) ogType.setAttribute('content', type);
-                
-                // Update Twitter tags
-                const twitterTitle = document.querySelector('meta[property="twitter:title"]');
-                const twitterDesc = document.querySelector('meta[property="twitter:description"]');
-                
-                if (twitterTitle && title) twitterTitle.setAttribute('content', title);
-                if (twitterDesc && description) twitterDesc.setAttribute('content', description);
-                
-                // Update URL in browser history (for sharing)
-                if (url) {
-                    window.history.replaceState(null, title, url);
-                }
-                
-                // Add canonical link
-                let canonicalLink = document.querySelector('link[rel="canonical"]');
-                if (!canonicalLink) {
-                    canonicalLink = document.createElement('link');
-                    canonicalLink.rel = 'canonical';
-                    document.head.appendChild(canonicalLink);
-                }
-                if (url) {
-                    canonicalLink.href = `https://agimsherifi.com${url}`;
-                }
                 
             }, [title, description, url, type]);
             
@@ -3942,29 +3938,12 @@ const PageTransition = ({ children, uniqueKey }) => {
         );
 
         const App = () => {
-            // Shto në App component
-useEffect(() => {
-  // Mat kohën e ngarkimit
-  const timing = window.performance.timing;
-  const loadTime = timing.loadEventEnd - timing.navigationStart;
-  console.log('Page load time:', loadTime);
-  
-  // Track user interactions
-  const trackClick = (e) => {
-    if (window.gtag) {
-      gtag('event', 'click', {
-        'event_category': 'engagement',
-        'event_label': e.target.tagName + ' ' + e.target.className
-      });
-    }
-  };
-  
-  document.addEventListener('click', trackClick);
-  return () => document.removeEventListener('click', trackClick);
-}, []);
+            // --- 1. DEKLARIMET E STATE ---
             const [darkMode, setDarkMode] = useState(false);
             const [currentView, setCurrentView] = useState('home');
             const [loading, setLoading] = useState(true);
+            
+            // State për Modalet dhe Veprimet
             const [checkoutItem, setCheckoutItem] = useState(null);
             const [viewItem, setViewItem] = useState(null);
             const [filmPoem, setFilmPoem] = useState(null);
@@ -3980,6 +3959,7 @@ useEffect(() => {
             const bookmarks = useBookmarks();
             const notificationSystem = NotificationSystem();
 
+            // Poezia e ditës (Memoized)
             const dailyPoem = useMemo(() => {
                 const today = new Date().getDate(); 
                 const allItems = [...DATA.quotes]; 
@@ -3991,65 +3971,54 @@ useEffect(() => {
                 setLoading(false);
             }, []);
 
+            // --- 2. LOGJIKA E "CLEAN URL" (Pa #) ---
             useEffect(() => {
-                // Performance monitoring
-                if ('performance' in window) {
-                    // Track page load time
-                    const [navigationEntry] = performance.getEntriesByType('navigation');
-                    if (navigationEntry) {
-                        console.log('[Performance] Page loaded in:', navigationEntry.loadEventEnd, 'ms');
+                const handleUrlChange = () => {
+                    // Kjo lexon /poezi/mergimi
+                    const path = window.location.pathname; 
+                    
+                    if (path.includes('/galeria')) {
+                        setCurrentView('gallery');
+                    } else if (path.includes('/poezi')) {
+                        setCurrentView('poems');
+                        // Këtu në të ardhmen mund të shtojmë logjikë për të hapur poezinë specifike
+                    } else if (path.includes('/thenie')) {
+                        setCurrentView('quotes');
+                    } else if (path.includes('/rreth-meje')) {
+                        setCurrentView('about');
+                    } else if (path.includes('/bookmarks')) {
+                        setCurrentView('bookmarks');
+                    } else {
+                        setCurrentView('home');
                     }
-                    
-                    // Monitor CLS (Cumulative Layout Shift)
-                    let clsValue = 0;
-                    let clsEntries = [];
-                    
-                    const observer = new PerformanceObserver((list) => {
-                        for (const entry of list.getEntries()) {
-                            if (!entry.hadRecentInput) {
-                                clsEntries.push(entry);
-                                clsValue += entry.value;
-                            }
-                        }
+                };
+
+                // Kontrollo URL kur hapet faqja
+                handleUrlChange();
+
+                // Dëgjo për ndryshime kur përdoruesi shtyp Back/Forward
+                window.addEventListener('popstate', handleUrlChange);
+                
+                return () => window.removeEventListener('popstate', handleUrlChange);
+            }, []); 
+
+            // --- 3. EFEKTET E TJERA ---
+            useEffect(() => {
+                const trackClick = (e) => {
+                    if (window.gtag) {
+                    gtag('event', 'click', {
+                        'event_category': 'engagement',
+                        'event_label': e.target.tagName + ' ' + e.target.className
                     });
-                    
-                    observer.observe({ type: 'layout-shift', buffered: true });
-                    
-                    // Log CLS on page hide
-                    const logCLS = () => {
-                        if (clsEntries.length > 0) {
-                            console.log('[Performance] CLS Score:', clsValue);
-                        }
-                    };
-                    
-                    window.addEventListener('visibilitychange', () => {
-                        if (document.visibilityState === 'hidden') {
-                            logCLS();
-                            observer.disconnect();
-                        }
-                    });
-                    
-                    return () => observer.disconnect();
-                }
+                    }
+                };
+                document.addEventListener('click', trackClick);
+                return () => document.removeEventListener('click', trackClick);
             }, []);
 
-            // Monitor bundle size
-            useEffect(() => {
-                if ('performance' in window && performance.memory) {
-                    console.log('[Performance] Memory used:', 
-                        Math.round(performance.memory.usedJSHeapSize / 1048576), 'MB'
-                    );
-                }
+            useEffect(() => { 
+                window.scrollTo(0, 0); 
             }, [currentView]);
-
-            useEffect(() => {
-                console.log('[Portfolio] Features loaded:');
-                console.log('- SmartRecommendations:', typeof SmartRecommendations);
-                console.log('- SocialShareSuite:', typeof SocialShareSuite);
-                console.log('- OptimizedImage:', typeof OptimizedImage);
-                console.log('- FloatingActionMenu:', typeof FloatingActionMenu);
-                console.log('- ErrorBoundary:', typeof ErrorBoundary);
-            }, []);
 
             useEffect(() => {
                 const hasSeen = sessionStorage.getItem('hasSeenPoemDay');
@@ -4059,14 +4028,11 @@ useEffect(() => {
                 }
             }, [loading]);
 
-            useEffect(() => { 
-                window.scrollTo(0, 0); 
-            }, [currentView]);
-
             const handlePrintRequest = (item, type) => {
                 setPrintModal({ isOpen: true, item, type });
             };
 
+            // --- 4. RENDERIMI (Me Navigim të Përditësuar) ---
             return (
                 <div className={`min-h-screen transition-colors duration-500 font-sans selection:bg-cyan-500 selection:text-white ${darkMode ? 'bg-slate-900 text-slate-100' : 'bg-white text-slate-900'}`}>
 
@@ -4076,7 +4042,30 @@ useEffect(() => {
                     <ParallaxBackground darkMode={darkMode} />
                     <ConstellationBackground darkMode={darkMode} />
 
-                    <Navigation darkMode={darkMode} setDarkMode={setDarkMode} currentView={currentView} onNavigate={setCurrentView} lang={lang} setLang={setLang} t={t} onRequest={() => setRequestOpen(true)} />
+                    <Navigation 
+                        darkMode={darkMode} 
+                        setDarkMode={setDarkMode} 
+                        currentView={currentView} 
+                        onNavigate={(view) => {
+                            setCurrentView(view);
+                            // NDRYSHIMI KRYESOR: Përdorim pushState për URL të pastër
+                            let newPath = '/';
+                            if(view === 'gallery') newPath = '/galeria';
+                            else if(view === 'poems') newPath = '/poezi';
+                            else if(view === 'quotes') newPath = '/thenie';
+                            else if(view === 'about') newPath = '/rreth-meje';
+                            else if(view === 'bookmarks') newPath = '/bookmarks';
+                            
+                            // Kjo ndryshon URL pa bërë refresh
+                            if (window.location.pathname !== newPath) {
+                                window.history.pushState({}, '', newPath);
+                            }
+                        }} 
+                        lang={lang} 
+                        setLang={setLang} 
+                        t={t} 
+                        onRequest={() => setRequestOpen(true)} 
+                    />
                     
                     <NotificationContainer
                         notifications={notificationSystem.notifications}
@@ -4086,7 +4075,12 @@ useEffect(() => {
 
                     <main className="relative">
                         <PageTransition uniqueKey={currentView}>
-                            {currentView === 'home' && <Hero darkMode={darkMode} onNavigate={setCurrentView} t={t} />}
+                            {currentView === 'home' && <Hero darkMode={darkMode} onNavigate={(view) => {
+                                setCurrentView(view);
+                                // Edhe këtu duhet përditësuar URL
+                                if(view === 'quotes') window.history.pushState({}, '', '/thenie');
+                                if(view === 'gallery') window.history.pushState({}, '', '/galeria');
+                            }} t={t} />}
                             {currentView === 'quotes' && <QuotesSection darkMode={darkMode} onBuy={setCheckoutItem} onView={setViewItem} t={t} bookmarks={bookmarks} />}
                             {currentView === 'poems' && <PoetrySection darkMode={darkMode} t={t} onView={setFilmPoem} bookmarks={bookmarks} />}
                             {currentView === 'gallery' && <GallerySection darkMode={darkMode} onBuy={setCheckoutItem} onView={setViewItem} t={t} />}
